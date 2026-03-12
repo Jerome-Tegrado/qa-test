@@ -33,8 +33,10 @@ Each user can change TP/TC format style (font, spacing, size, layout, etc.).
 You can either make manual code changes or use AI coding agents to help. This is usually easier.
 
 1. Test Plan formatting (DOCX):
-- If you want default information to appear immediately in every generated Test Plan, set it in `input/format/tp-format.yaml` (default structure and wording rules).
-- For Test Plan styling, update `tp-generate.py` (fonts, spacing, font size, and related typography behavior).
+- If you want default information to appear immediately in every generated Test Plan, set it in `input/format/tp-format.yaml`.
+- Test Plan content fields you can set in `input/format/tp-format.yaml`: `tp_title`, `intro`, `scope.in_scope`, `scope.out_scope`, `objectives[]`, `approach_block`, `schedule[]` (`phase`, `start`, `end`), `environment_block`, `resources[]` (`role`, `name`, `responsibilities`), `risks[]` (`risk`, `mitigation`), `deliverables[]`, `entry`, and `exit`.
+- For Test Plan styling, update `tp-generate.py`.
+- Common style controls in `tp-generate.py`: paragraph alignment/line spacing/spacing-before/spacing-after, bullet formatting, table formatting (`Table Grid`, headers, widths), heading/body font sizing, default font family, label bolding (for fields like Purpose, In Scope, Out of Scope, Methodologies, Type of Testing, Tools Used, Environment, Entry, and Exit), and section spacing rules.
 
 2. Test Case formatting (XLSX):
 - Update `input/format/tc-format.yaml` for all Test Case Excel formatting customization.
