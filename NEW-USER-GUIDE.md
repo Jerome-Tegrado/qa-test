@@ -28,8 +28,6 @@ pip install pyyaml python-docx openpyxl
 - Put all files in `context/context-format/` into the AI project source files.
 - If your work is backend, attach files from `context/backend/`.
 - If your work is frontend, attach files from `context/frontend/`.
-- `input/customize/test-plan.yaml`
-- `input/customize/test-case.yaml`
 
 ## 3. Customize Format Per User (Before Generation)
 
@@ -38,6 +36,9 @@ For TP and TC customization, edit only these two files:
 - `input/customize/test-plan.yaml`
 - `input/customize/test-case.yaml`
 You do not need to edit templates or Python scripts for normal TP/TC personalization.
+After you finish personalizing these files, attach both to the AI project source files:
+- `input/customize/test-plan.yaml`
+- `input/customize/test-case.yaml`
 
 1. Test Plan customization (DOCX output):
 - Edit only `input/customize/test-plan.yaml`.
