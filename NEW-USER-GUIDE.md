@@ -33,6 +33,8 @@ Each user can change TP/TC format style (font, spacing, size, layout, etc.).
 You can either make manual code changes or use AI coding agents to help. This is usually easier.
 
 1. Test Plan formatting (DOCX):
+- Update `input/format/tp-format.yaml` for your preferred Test Plan YAML structure/wording rules.
+- Keep `context/tp-format.yaml` aligned with `input/format/tp-format.yaml` so the AI prompt and local format reference stay consistent.
 - Update style/template structure in `templates/Test-Plan-Template.docx`.
 - If needed, update styling logic in `tp-generate.py` (font size, spacing, typography behavior).
 - Update generated Test Plan content in `input/tp/tp.yaml` (this is the file consumed by `tp-generate.py`).
