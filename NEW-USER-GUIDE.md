@@ -25,7 +25,9 @@ pip install pyyaml python-docx openpyxl
 2. Create one project/workspace for this QA system.
 
 3. Upload/add these files as project context:
-- All files in the `context/` folder
+- Put all files in `context/context-format/` into the AI project source files.
+- If your work is backend, attach files from `context/backend/`.
+- If your work is frontend, attach files from `context/frontend/`.
 - `input/customize/test-plan.yaml`
 - `input/customize/test-case.yaml`
 
