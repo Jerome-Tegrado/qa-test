@@ -1,71 +1,67 @@
-﻿# tp-format.yaml
+# tp-format.yaml
+# General reference format. Keep this file reusable and non-personalized.
 
-tp_title: "<Component / Feature Name>"
+tp_title: "<Feature or Component Name>"
 
 intro: |
-  <1-2 short sentences on what is being tested and why. Keep it direct.>
+  <1-2 short sentences describing what is being tested and why it matters.>
 
 scope:
   in_scope: |
-    <1-2 short sentences. State exactly what QA will validate.>
+    <1-2 short sentences describing what QA will validate.>
   out_scope: |
-    <1 sentence. State what is not covered.>
+    <1 short sentence describing what is not covered.>
 
 objectives:
-  - "Verify that <requirement 1>."
-  # Add more objectives only as needed based on feature scope.
-  # Objectives are dynamic and must not be forced to a fixed count.
+  - "Verify that <key requirement 1> is met."
+  - "Verify that <key requirement 2> is met."
 
 approach_block: |
-  Methodology: Manual Testing (UI/Visual/Interaction). Add Automation Testing only if needed.
-  Type of Testing: Functional Testing, UI Testing, Responsive Testing.
-  Tools Used: OpenProject, Chrome DevTools. Add Playwright only if automation support is needed.
+  Methodologies: <Manual, Automation, or Hybrid based on coverage needs.>
+  Type of Testing: <Functional, Integration, Regression, and other relevant test types.>
+  Tools Used: <Test management, browser/devtools, API client, automation tools as needed.>
 
 schedule:
-  - phase: "Test Planning"
+  - phase: "Planning"
     start: "<MM/DD or TBD>"
     end: "<MM/DD or TBD>"
-  - phase: "Test Case Design"
+  - phase: "Design"
     start: "<MM/DD or TBD>"
     end: "<MM/DD or TBD>"
-  - phase: "Test Execution"
+  - phase: "Execution"
     start: "<MM/DD or TBD>"
     end: "<MM/DD or TBD>"
-  - phase: "Bug Fix Verification"
-    start: "<MM/DD or TBD>"
-    end: "<MM/DD or TBD>"
-  - phase: "Test Completion"
+  - phase: "Retest and Closure"
     start: "<MM/DD or TBD>"
     end: "<MM/DD or TBD>"
 
 environment_block: |
-  Hardware/Software: Desktop / Windows 10 / Google Chrome
-  Staging URL or App Version: <TBD or staging link / version>
-  Test Data Sources: <Only include this line if test data source details are needed>
+  Hardware/Software: <Target device, OS, browser/app version>
+  Staging URL or App Version: <URL or version>
+  Test Data Sources: <Optional; include only when needed>
 
 resources:
   - role: "QA Lead"
-    name: "Sir Nico"
-    responsibilities: "<Review TP/TC, coordinate testing coverage, and perform final validation.>"
-  - role: "QA Test Engineer"
-    name: "Jerome"
-    responsibilities: "<Design TCs, execute tests, capture evidence, and report defects.>"
+    name: "<Name or Team>"
+    responsibilities: "<Planning oversight, review, and sign-off.>"
+  - role: "QA Engineer"
+    name: "<Name or Team>"
+    responsibilities: "<Test design, execution, evidence capture, and defect logging.>"
   - role: "Developer"
-    name: "TBD"
-    responsibilities: "<Fix defects and support verification.>"
+    name: "<Name or Team>"
+    responsibilities: "<Defect fixes and support for verification.>"
 
 risks:
-  - risk: "<Risk 1>"
-    mitigation: "<Mitigation 1>"
-  # Add more risk/mitigation pairs as needed based on feature risks and mitigations.
-  # This list is dynamic and must not be forced to an exact number of items or fixed count.
+  - risk: "<Risk description>"
+    mitigation: "<Mitigation action>"
 
 deliverables:
   - "Test Plan Document"
   - "Test Cases Document"
+  - "Defect Report (if applicable)"
 
 entry: |
-  <1-2 compact sentences describing when testing can start. Not a list.>
+  <1-2 short sentences describing when testing can start.>
 
 exit: |
-  <1-2 compact sentences describing when testing can end. Not a list.>
+  <1-2 short sentences describing when testing can end.>

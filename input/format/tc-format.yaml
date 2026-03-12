@@ -1,3 +1,6 @@
+# tc-format.yaml
+# General legacy reference format. Personalize live defaults in input/customize/test-case.yaml.
+
 workbook:
   sheet_name: Sheet1
   start_row: 1
@@ -49,7 +52,7 @@ header_style:
   font_size: 11
   bold: true
   font_color: "FFFFFF"
-  fill_color: "76933C"
+  fill_color: "4F81BD"
   horizontal_alignment: center
   vertical_alignment: center
   wrap_text: true
@@ -87,4 +90,6 @@ generation_rules:
   status_dropdown_options:
     - Passed
     - Failed
+    - Blocked
+    - Not Run
   blank_rows_when_no_data: 6

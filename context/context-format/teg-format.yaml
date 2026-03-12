@@ -1,3 +1,6 @@
+# teg-format.yaml
+# General legacy reference format. Keep content reusable for frontend and backend execution guides.
+
 document:
   title: Test Execution Guide
   font_name: Calibri
@@ -6,7 +9,7 @@ document:
   blank_line_between_blocks: true
 
 template:
-  default_template: templates/TEG_Template.docx
+  default_template: templates/Test-Execution-Guide-Template.docx
 
 excel:
   header_scan_rows: 10
@@ -49,33 +52,33 @@ excel:
 
 sections:
   guide_title_prefix: "Guide for "
-  guide_title_separator: " – "
+  guide_title_separator: " - "
 
   devtools_checks:
-    heading: "DevTools checks"
+    heading: "Execution checks"
     bullets:
-      - "Elements: ______________________________"
-      - "Console: _______________________________"
-      - "Network (if applicable): _______________"
+      - "Preconditions and environment are ready."
+      - "Logs/Console review completed (if applicable)."
+      - "Network/API behavior review completed (if applicable)."
 
   evidence_to_capture:
-    heading: "Evidence to capture (minimum)"
+    heading: "Evidence to capture"
     numbered:
-      - "Screenshot: Before action (UI state)"
-      - "Screenshot: After action (UI state)"
-      - "Screenshot: DevTools proof (pick one)"
+      - "Before action state"
+      - "After action state"
+      - "Supporting technical proof (if applicable)"
     bullets:
-      - "Elements state (class/attribute/visibility), OR"
-      - "Console (no errors / error shown), OR"
-      - "Network (request + status/response)"
+      - "UI evidence (screen state), or"
+      - "API/request evidence, or"
+      - "System/log evidence"
 
   pass_fail_rule:
     heading: "Pass/Fail rule"
     pass_if_prefix: "Pass if: "
     fail_if_prefix: "Fail if: "
     blocked_if_prefix: "Blocked if: "
-    fail_if_text: "Actual result does not match the expected result from the test case sheet."
-    blocked_if_text: "Required environment, access, data, dependency, or precondition is unavailable."
+    fail_if_text: "Actual result does not match the expected result in the test case."
+    blocked_if_text: "Required environment, access, data, or dependency is unavailable."
 
   notes:
     heading: "Notes (optional, 1 line)"
