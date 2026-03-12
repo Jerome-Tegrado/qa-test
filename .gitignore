@@ -1,0 +1,20 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Local virtual environments
+.venv/
+venv/
+env/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+
+# Generated outputs
+output/
+
+# Runtime input data (keep format templates tracked)
+input/tp/*.yaml
+input/tc/*.yaml
+input/teg/*.yaml

@@ -1,0 +1,71 @@
+﻿# tp-format.yaml
+
+tp_title: "<Component / Feature Name>"
+
+intro: |
+  <1-2 short sentences on what is being tested and why. Keep it direct.>
+
+scope:
+  in_scope: |
+    <1-2 short sentences. State exactly what QA will validate.>
+  out_scope: |
+    <1 sentence. State what is not covered.>
+
+objectives:
+  - "Verify that <requirement 1>."
+  # Add more objectives only as needed based on feature scope.
+  # Objectives are dynamic and must not be forced to a fixed count.
+
+approach_block: |
+  Methodology: Manual Testing (UI/Visual/Interaction). Add Automation Testing only if needed.
+  Type of Testing: Functional Testing, UI Testing, Responsive Testing.
+  Tools Used: OpenProject, Chrome DevTools. Add Playwright only if automation support is needed.
+
+schedule:
+  - phase: "Test Planning"
+    start: "<MM/DD or TBD>"
+    end: "<MM/DD or TBD>"
+  - phase: "Test Case Design"
+    start: "<MM/DD or TBD>"
+    end: "<MM/DD or TBD>"
+  - phase: "Test Execution"
+    start: "<MM/DD or TBD>"
+    end: "<MM/DD or TBD>"
+  - phase: "Bug Fix Verification"
+    start: "<MM/DD or TBD>"
+    end: "<MM/DD or TBD>"
+  - phase: "Test Completion"
+    start: "<MM/DD or TBD>"
+    end: "<MM/DD or TBD>"
+
+environment_block: |
+  Hardware/Software: Desktop / Windows 10 / Google Chrome
+  Staging URL or App Version: <TBD or staging link / version>
+  Test Data Sources: <Only include this line if test data source details are needed>
+
+resources:
+  - role: "QA Lead"
+    name: "Sir Nico"
+    responsibilities: "<Review TP/TC, coordinate testing coverage, and perform final validation.>"
+  - role: "QA Test Engineer"
+    name: "Jerome"
+    responsibilities: "<Design TCs, execute tests, capture evidence, and report defects.>"
+  - role: "Developer"
+    name: "TBD"
+    responsibilities: "<Fix defects and support verification.>"
+
+risks:
+  - risk: "<Risk 1>"
+    mitigation: "<Mitigation 1>"
+  # Add more risk/mitigation pairs as needed based on feature risks and mitigations.
+  # This list is dynamic and must not be forced to an exact number of items or fixed count.
+
+deliverables:
+  - "Test Plan Document"
+  - "Test Cases Document"
+
+entry: |
+  <1-2 compact sentences describing when testing can start. Not a list.>
+
+exit: |
+  <1-2 compact sentences describing when testing can end. Not a list.>

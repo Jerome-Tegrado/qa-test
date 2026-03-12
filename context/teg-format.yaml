@@ -1,0 +1,82 @@
+document:
+  title: Test Execution Guide
+  font_name: Calibri
+  font_size: 11
+  output_prefix: TEG_
+  blank_line_between_blocks: true
+
+template:
+  default_template: templates/TEG_Template.docx
+
+excel:
+  header_scan_rows: 10
+  header_aliases:
+    tc_id:
+      - Test Case #
+      - Test Case#
+      - Test Case No
+      - Test Case Number
+      - Test Case ID
+      - TC ID
+      - TCID
+      - ID
+      - Case ID
+      - No
+
+    title:
+      - Title
+      - Test Case Title
+      - Test Title
+      - Name
+      - Scenario
+      - Test Scenario
+
+    steps:
+      - Steps
+      - Test Steps
+      - Procedure
+      - Actions
+      - Action
+      - Step
+
+    expected:
+      - Expected Result
+      - Expected Results
+      - Expected
+      - Expected Behavior
+      - Expected Output
+      - Result
+
+sections:
+  guide_title_prefix: "Guide for "
+  guide_title_separator: " – "
+
+  devtools_checks:
+    heading: "DevTools checks"
+    bullets:
+      - "Elements: ______________________________"
+      - "Console: _______________________________"
+      - "Network (if applicable): _______________"
+
+  evidence_to_capture:
+    heading: "Evidence to capture (minimum)"
+    numbered:
+      - "Screenshot: Before action (UI state)"
+      - "Screenshot: After action (UI state)"
+      - "Screenshot: DevTools proof (pick one)"
+    bullets:
+      - "Elements state (class/attribute/visibility), OR"
+      - "Console (no errors / error shown), OR"
+      - "Network (request + status/response)"
+
+  pass_fail_rule:
+    heading: "Pass/Fail rule"
+    pass_if_prefix: "Pass if: "
+    fail_if_prefix: "Fail if: "
+    blocked_if_prefix: "Blocked if: "
+    fail_if_text: "Actual result does not match the expected result from the test case sheet."
+    blocked_if_text: "Required environment, access, data, dependency, or precondition is unavailable."
+
+  notes:
+    heading: "Notes (optional, 1 line)"
+    bullet: ""
