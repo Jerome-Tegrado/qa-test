@@ -37,9 +37,13 @@ You can either make manual code changes or use AI coding agents to help. This is
 - For Test Plan styling, update `tp-generate.py` (fonts, spacing, font size, and related typography behavior).
 
 2. Test Case formatting (XLSX):
-- Update `input/format/tc-format.yaml`
-- Typical changes in `input/format/tc-format.yaml` (applied by `tc-generate.py`): columns/headers/width, `header_style`, `body_style`, `row_style`, `page_setup`, and `generation_rules`.
-- For Test Case content/instructions, update `input/tc/tc.yaml` (or adjust `prompts/tc/tc-prompt.md`), not `input/format/tc-format.yaml`.
+- Update `input/format/tc-format.yaml` for all Test Case Excel formatting customization.
+- Column setup: `columns` (`key`, `header`, `column`, `width`).
+- Header style: `header_style` (`font_name`, `font_size`, `bold`, `font_color`, `fill_color`, `horizontal_alignment`, `vertical_alignment`, `wrap_text`).
+- Body style: `body_style` (`font_name`, `font_size`, `bold`, `font_color`, `horizontal_alignment`, `vertical_alignment`, `wrap_text`, `border.style`, `border.color`).
+- Row sizing: `row_style` (`header_height`, `body_height`).
+- Page layout: `page_setup` (`orientation`, `fit_to_width`, `fit_to_height`, `margins.left/right/top/bottom/header/footer`).
+- Generation behavior: `generation_rules` (`freeze_header_row`, `status_dropdown_options`, `blank_rows_when_no_data`) and `workbook` (`sheet_name`, `start_row`, `start_column`).
 
 3. Test Execution Guide:
 - Update `input/format/teg-format.yaml` for TEG structure/style mapping.
