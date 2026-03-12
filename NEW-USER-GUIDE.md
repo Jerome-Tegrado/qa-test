@@ -57,18 +57,21 @@ In Claude/ChatGPT project:
 2. Provide in the square-bracket field of the prompt:
 - Full user story/PBI + acceptance criteria.
 
-3. Then execute the prompt using your chosen AI model.
-
-4. Paste output into:
+3. Execute the prompt using your chosen AI model.
+4. Make sure the AI returns the result as YAML code output.
+5. If the AI already returns YAML code output, copy the YAML content.
+6. If not, ask: "Show me the YAML content in code format."
+7. Then copy the YAML content.
+8. Paste output into:
 - `input/tp/tp.yaml`
 
-5. Generate DOCX:
+9. Generate DOCX:
 
 ```bash
 python tp-generate.py
 ```
 
-6. You will see the output in `output/test-plans/`.
+10. You will see the output in `output/test-plans/`.
 
 ## Step 2: Generate Test Case YAML
 
@@ -79,17 +82,20 @@ In Claude/ChatGPT project:
 - Full user story/PBI/AC and approved requirements
 
 3. Execute the prompt using your chosen AI model.
-
-4. Paste output into:
+4. Make sure the AI returns the result as YAML code output.
+5. If the AI already returns YAML code output, copy the YAML content.
+6. If not, ask: "Show me the YAML content in code format."
+7. Then copy the YAML content.
+8. Paste output into:
 - `input/tc/tc.yaml`
 
-5. Generate XLSX:
+9. Generate XLSX:
 
 ```bash
 python tc-generate.py
 ```
 
-6. You will see the output in `output/test-cases/`.
+10. You will see the output in `output/test-cases/`.
 
 ## Step 3: Validate TP and TC
 
@@ -123,7 +129,7 @@ Note: In the current codebase, TEG generation is driven by the generated Test Ca
 For every AI generation step:
 - Use the corresponding prompt file as the base instruction.
 - Attach required source files and input information.
-- Require strict output: YAML only (no explanation, no markdown fences).
+- Require strict output: YAML only (no explanation). If the AI shows YAML in a code block, copy only the YAML content into your local `.yaml` file.
 - Validate before finalizing documents.
 
 ## 6. Output Folder Guide (Local Only, Do Not Push)
