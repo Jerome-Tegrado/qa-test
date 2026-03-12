@@ -33,9 +33,9 @@ Each user can change TP/TC format style (font, spacing, size, layout, etc.).
 You can either make manual code changes or use AI coding agents to help. This is usually easier.
 
 1. Test Plan formatting (DOCX):
-- Update `input/format/tp-format.yaml`
+- Update style/template structure in `templates/Test-Plan-Template.docx`.
 - If needed, update styling logic in `tp-generate.py` (font size, spacing, typography behavior).
-- If needed, add personalized instructions to the YAML content by updating `input/format/tp-format.yaml`.
+- Update generated Test Plan content in `input/tp/tp.yaml` (this is the file consumed by `tp-generate.py`).
 
 2. Test Case formatting (XLSX):
 - Update `input/format/tc-format.yaml`
@@ -43,7 +43,8 @@ You can either make manual code changes or use AI coding agents to help. This is
 - If needed, add personalized instructions to the YAML content by updating `input/format/tc-format.yaml`.
 
 3. Test Execution Guide:
-- Keep current TEG format as-is.
+- Update `input/format/teg-format.yaml` for TEG structure/style mapping.
+- If needed, adjust formatting logic in `teg-generate.py`.
 
 ## 4. System Workflow (Run in Order)
 
