@@ -33,11 +33,8 @@ Each user can change TP/TC format style (font, spacing, size, layout, etc.).
 You can either make manual code changes or use AI coding agents to help. This is usually easier.
 
 1. Test Plan formatting (DOCX):
-- Update `input/format/tp-format.yaml` for your preferred Test Plan YAML structure/wording rules.
-- Keep `context/tp-format.yaml` aligned with `input/format/tp-format.yaml` so the AI prompt and local format reference stay consistent.
-- Update style/template structure in `templates/Test-Plan-Template.docx`.
-- If needed, update styling logic in `tp-generate.py` (font size, spacing, typography behavior).
-- Update generated Test Plan content in `input/tp/tp.yaml` (this is the file consumed by `tp-generate.py`).
+- If you want default information to appear immediately in every generated Test Plan, set it in `input/format/tp-format.yaml` (default structure and wording rules).
+- For Test Plan styling, update `tp-generate.py` (fonts, spacing, font size, and related typography behavior).
 
 2. Test Case formatting (XLSX):
 - Update `input/format/tc-format.yaml`
@@ -58,8 +55,8 @@ In Claude/ChatGPT project:
 - Full user story/PBI + acceptance criteria.
 
 3. Execute the prompt using your chosen AI model.
-4. Make sure the AI returns the result as YAML code output.
-5. If the AI already returns YAML code output, copy the YAML content.
+4. Make sure the AI returns the result in a YAML code block format (with a copy button).
+5. If the AI already returns YAML in code block format, click copy (or copy the YAML content).
 6. If not, ask: "Show me the YAML content in code format."
 7. Then copy the YAML content.
 8. Paste output into:
@@ -82,8 +79,8 @@ In Claude/ChatGPT project:
 - Full user story/PBI/AC and approved requirements
 
 3. Execute the prompt using your chosen AI model.
-4. Make sure the AI returns the result as YAML code output.
-5. If the AI already returns YAML code output, copy the YAML content.
+4. Make sure the AI returns the result in a YAML code block format (with a copy button).
+5. If the AI already returns YAML in code block format, click copy (or copy the YAML content).
 6. If not, ask: "Show me the YAML content in code format."
 7. Then copy the YAML content.
 8. Paste output into:
@@ -129,7 +126,7 @@ Note: In the current codebase, TEG generation is driven by the generated Test Ca
 For every AI generation step:
 - Use the corresponding prompt file as the base instruction.
 - Attach required source files and input information.
-- Require strict output: YAML only (no explanation). If the AI shows YAML in a code block, copy only the YAML content into your local `.yaml` file.
+- Require strict output: YAML only in a code block format (no explanation). Use the copy button, then paste only the YAML content into your local `.yaml` file.
 - Validate before finalizing documents.
 
 ## 6. Output Folder Guide (Local Only, Do Not Push)
