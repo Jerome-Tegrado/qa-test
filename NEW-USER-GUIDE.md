@@ -33,21 +33,23 @@ pip install pyyaml python-docx openpyxl
 
 Each user can tailor TP/TC outputs to match their own preferred style and structure (font, spacing, size, layout, wording, and defaults).
 For TP and TC customization, edit only these two files:
-- `input/customize/test-plan.yaml`
-- `input/customize/test-case.yaml`
+- `input/customize/tp-customize.yaml`
+- `input/customize/tc-customize.yaml`
 
 You do not need to edit templates or Python scripts for normal TP/TC personalization.
 After you finish personalizing these files, attach both to the AI project source files:
+- `input/customize/tp-customize.yaml`
+- `input/customize/tc-customize.yaml`
 
 1. Test Plan customization (DOCX output):
-- Edit only `input/customize/test-plan.yaml`.
+- Edit only `input/customize/tp-customize.yaml`.
 - `defaults`: default Test Plan content values (title, scope, objectives, approach, schedule, environment, resources, risks, deliverables, entry, exit).
 - `style`: font family/sizes, paragraph spacing/alignment, label bolding.
 - `layout`: table style/width and table-section spacing behavior.
 - `behavior`: intro prefix label and ordered labeled-block mapping (environment/approach labels and aliases).
 
 2. Test Case customization (XLSX output):
-- Edit only `input/customize/test-case.yaml`.
+- Edit only `input/customize/tc-customize.yaml`.
 - `defaults`: workbook setup (`sheet_name`, `start_row`, `start_column`), column headers/letters/widths, default row values.
 - `style`: header/body font, color, fill, alignment, wrap, border.
 - `layout`: row heights and page setup/margins.

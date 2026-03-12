@@ -39,7 +39,7 @@ python teg-generate.py "output/test-cases/Test Case_<Feature Name>.xlsx"
 ## Inputs and Prompts
 
 - Prompt templates: `prompts/`
-- TP/TC customization (edit these): `input/customize/test-plan.yaml`, `input/customize/test-case.yaml`
+- TP/TC customization (edit these): `input/customize/tp-customize.yaml`, `input/customize/tc-customize.yaml`
 - Legacy formatting config (backward compatibility): `input/format/`
 - Reference context: `context/`
 

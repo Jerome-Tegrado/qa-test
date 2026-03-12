@@ -12,7 +12,8 @@ INPUT_DIR = BASE_DIR / "input"
 OUTPUT_DIR = BASE_DIR / "output"
 TC_OUTPUT_DIR = OUTPUT_DIR / "test-cases"
 
-TC_CUSTOMIZE_FILE = INPUT_DIR / "customize" / "test-case.yaml"
+TC_CUSTOMIZE_FILE = INPUT_DIR / "customize" / "tc-customize.yaml"
+LEGACY_TC_CUSTOMIZE_FILE = INPUT_DIR / "customize" / "test-case.yaml"
 LEGACY_TC_FORMAT_FILE = INPUT_DIR / "format" / "tc-format.yaml"
 TC_DATA_FILE = INPUT_DIR / "tc" / "tc.yaml"
 TP_DATA_FILE = INPUT_DIR / "tp" / "tp.yaml"
@@ -140,6 +141,8 @@ def normalize_tc_customization_schema(raw_cfg: dict) -> dict:
 def load_tc_customization() -> dict:
     if TC_CUSTOMIZE_FILE.exists():
         raw_cfg = load_yaml(TC_CUSTOMIZE_FILE)
+    elif LEGACY_TC_CUSTOMIZE_FILE.exists():
+        raw_cfg = load_yaml(LEGACY_TC_CUSTOMIZE_FILE)
     elif LEGACY_TC_FORMAT_FILE.exists():
         raw_cfg = load_yaml(LEGACY_TC_FORMAT_FILE)
     else:

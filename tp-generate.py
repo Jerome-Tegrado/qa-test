@@ -12,7 +12,8 @@ from docx.oxml.ns import qn
 BASE = Path(__file__).parent
 TEMPLATE = BASE / "templates" / "Test-Plan-Template.docx"
 INPUT = BASE / "input" / "tp" / "tp.yaml"
-TP_CUSTOMIZE_FILE = BASE / "input" / "customize" / "test-plan.yaml"
+TP_CUSTOMIZE_FILE = BASE / "input" / "customize" / "tp-customize.yaml"
+LEGACY_TP_CUSTOMIZE_FILE = BASE / "input" / "customize" / "test-plan.yaml"
 LEGACY_TP_FORMAT_FILE = BASE / "input" / "format" / "tp-format.yaml"
 OUTPUT_DIR = BASE / "output"
 TP_OUTPUT_DIR = OUTPUT_DIR / "test-plans"
@@ -261,6 +262,8 @@ def normalize_tp_customization_schema(raw_cfg: dict) -> dict:
 def load_tp_customization() -> dict:
     if TP_CUSTOMIZE_FILE.exists():
         raw_cfg = load_yaml_file(TP_CUSTOMIZE_FILE)
+    elif LEGACY_TP_CUSTOMIZE_FILE.exists():
+        raw_cfg = load_yaml_file(LEGACY_TP_CUSTOMIZE_FILE)
     elif LEGACY_TP_FORMAT_FILE.exists():
         raw_cfg = load_yaml_file(LEGACY_TP_FORMAT_FILE)
     else:
