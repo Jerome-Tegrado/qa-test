@@ -24,8 +24,8 @@ pip install pyyaml python-docx openpyxl
 
 2. Create one project/workspace for this QA system.
 
-3. Upload/add these as project context:
-- all files in the context folder
+3. Upload/add these files as project context:
+- All files in the `context/` folder
 
 ## 3. Customize Format Per User (Before Generation)
 
@@ -33,13 +33,14 @@ Each user can change TP/TC format style (font, spacing, size, layout, etc.).
 You can either make manual code changes or use AI coding agents to help. This is usually easier.
 
 1. Test Plan formatting (DOCX):
+- Update `input/format/tp-format.yaml`
 - If needed, update styling logic in `tp-generate.py` (font size, spacing, typography behavior).
-- If needed, add personalized instructions to the YAML content by updating `tp-format.yaml`.
+- If needed, add personalized instructions to the YAML content by updating `input/format/tp-format.yaml`.
 
 2. Test Case formatting (XLSX):
 - Update `input/format/tc-format.yaml`
-- Typical changes: `font_name`, `font_size`, column width, row height, colors, alignment.
-- If needed, add personalized instructions to the YAML content by updating `tc-format.yaml`.
+- Typical changes in `input/format/tc-format.yaml`: `font_name`, `font_size`, column width, row height, colors, and alignment.
+- If needed, add personalized instructions to the YAML content by updating `input/format/tc-format.yaml`.
 
 3. Test Execution Guide:
 - Keep current TEG format as-is.
@@ -50,19 +51,21 @@ You can either make manual code changes or use AI coding agents to help. This is
 
 In Claude/ChatGPT project:
 1. Use `prompts/tp/tp-prompt.md`.
-2. Provide in the prompt:
-- Full user story/PBI + acceptance criteria in the square-bracket field.
+2. Provide in the square-bracket field of the prompt:
+- Full user story/PBI + acceptance criteria.
 
 3. Then execute the prompt using your chosen AI model.
 
-Paste output into:
+4. Paste output into:
 - `input/tp/tp.yaml`
 
-Generate DOCX:
+5. Generate DOCX:
 
 ```bash
 python tp-generate.py
 ```
+
+6. You will see the output in `output/test-plans/`.
 
 ## Step 2: Generate Test Case YAML
 
@@ -77,18 +80,20 @@ In Claude/ChatGPT project:
 4. Paste output into:
 - `input/tc/tc.yaml`
 
-Generate XLSX:
+5. Generate XLSX:
 
 ```bash
 python tc-generate.py
 ```
+
+6. You will see the output in `output/test-cases/`.
 
 ## Step 3: Validate TP and TC
 
 In Claude/ChatGPT project:
 1. Use `prompts/validator/tp-tc-validator-prompt.md`.
 2. Provide:
-- CORRECT AND ACTUAL INFORMATION (this is the user story/PBI)
+- Correct and actual information (the user story/PBI)
 - Current Test Plan
 - Current Test Case
 3. Check result:
@@ -124,8 +129,3 @@ Generated files are created in these folders:
 - Test Plan (DOCX): `output/test-plans/`
 - Test Case (XLSX): `output/test-cases/`
 - Test Execution Guide (DOCX): `output/test-execution-guides/`
-
-Important:
-- Keep generated output files local only.
-- Do not push generated files to GitHub.
-- This repo already ignores `output/` via `.gitignore`.
