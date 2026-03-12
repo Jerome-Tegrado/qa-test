@@ -1,0 +1,102 @@
+# Single editable customization file for Test Case generation.
+# Users should only edit this file for Excel structure/design/behavior.
+
+defaults:
+  workbook:
+    sheet_name: Sheet1
+    start_row: 1
+    start_column: 1
+
+  columns:
+    - key: title
+      header: Test Case Title
+      column: A
+      width: 40
+
+    - key: description
+      header: Test Description
+      column: B
+      width: 42
+
+    - key: preconditions
+      header: Preconditions
+      column: C
+      width: 34
+
+    - key: steps
+      header: Test Steps
+      column: D
+      width: 34
+
+    - key: expected_results
+      header: Expected Results
+      column: E
+      width: 36
+
+    - key: actual_results
+      header: Actual Results
+      column: F
+      width: 36
+
+    - key: status
+      header: Status
+      column: G
+      width: 15
+
+    - key: test_evidence
+      header: Test Evidence
+      column: H
+      width: 24
+
+  row_values:
+    actual_results: ""
+    status: ""
+    test_evidence: ""
+
+style:
+  header:
+    font_name: Calibri
+    font_size: 11
+    bold: true
+    font_color: "FFFFFF"
+    fill_color: "76933C"
+    horizontal_alignment: center
+    vertical_alignment: center
+    wrap_text: true
+
+  body:
+    font_name: Calibri
+    font_size: 10
+    bold: false
+    font_color: "000000"
+    horizontal_alignment: left
+    vertical_alignment: top
+    wrap_text: true
+    border:
+      style: thin
+      color: "D9D9D9"
+
+layout:
+  row_style:
+    header_height: 22
+    body_height: 60
+
+  page_setup:
+    orientation: landscape
+    fit_to_width: 1
+    fit_to_height: 0
+    margins:
+      left: 0.25
+      right: 0.25
+      top: 0.5
+      bottom: 0.5
+      header: 0.3
+      footer: 0.3
+
+behavior:
+  generation_rules:
+    freeze_header_row: true
+    status_dropdown_options:
+      - Passed
+      - Failed
+    blank_rows_when_no_data: 6

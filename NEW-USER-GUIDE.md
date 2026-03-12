@@ -26,26 +26,30 @@ pip install pyyaml python-docx openpyxl
 
 3. Upload/add these files as project context:
 - All files in the `context/` folder
+- `input/customize/test-plan.yaml`
+- `input/customize/test-case.yaml`
 
 ## 3. Customize Format Per User (Before Generation)
 
-Each user can change TP/TC format style (font, spacing, size, layout, etc.).
-You can either make manual code changes or use AI coding agents to help. This is usually easier.
+Each user can tailor TP/TC outputs to match their own preferred style and structure (font, spacing, size, layout, wording, and defaults).
+For TP and TC customization, edit only these two files:
+- `input/customize/test-plan.yaml`
+- `input/customize/test-case.yaml`
+You do not need to edit templates or Python scripts for normal TP/TC personalization.
 
-1. Test Plan formatting (DOCX):
-- If you want default information to appear immediately in every generated Test Plan, set it in `input/format/tp-format.yaml`.
-- Test Plan content fields you can set in `input/format/tp-format.yaml`: `tp_title`, `intro`, `scope.in_scope`, `scope.out_scope`, `objectives[]`, `approach_block`, `schedule[]` (`phase`, `start`, `end`), `environment_block`, `resources[]` (`role`, `name`, `responsibilities`), `risks[]` (`risk`, `mitigation`), `deliverables[]`, `entry`, and `exit`.
-- For Test Plan styling, update `tp-generate.py`.
-- Common style controls in `tp-generate.py`: paragraph alignment/line spacing/spacing-before/spacing-after, bullet formatting, table formatting (`Table Grid`, headers, widths), heading/body font sizing, default font family, label bolding (for fields like Purpose, In Scope, Out of Scope, Methodologies, Type of Testing, Tools Used, Environment, Entry, and Exit), and section spacing rules.
+1. Test Plan customization (DOCX output):
+- Edit only `input/customize/test-plan.yaml`.
+- `defaults`: default Test Plan content values (title, scope, objectives, approach, schedule, environment, resources, risks, deliverables, entry, exit).
+- `style`: font family/sizes, paragraph spacing/alignment, label bolding.
+- `layout`: table style/width and table-section spacing behavior.
+- `behavior`: intro prefix label and ordered labeled-block mapping (environment/approach labels and aliases).
 
-2. Test Case formatting (XLSX):
-- Update `input/format/tc-format.yaml` for all Test Case Excel formatting customization.
-- Column setup: `columns` (`key`, `header`, `column`, `width`).
-- Header style: `header_style` (`font_name`, `font_size`, `bold`, `font_color`, `fill_color`, `horizontal_alignment`, `vertical_alignment`, `wrap_text`).
-- Body style: `body_style` (`font_name`, `font_size`, `bold`, `font_color`, `horizontal_alignment`, `vertical_alignment`, `wrap_text`, `border.style`, `border.color`).
-- Row sizing: `row_style` (`header_height`, `body_height`).
-- Page layout: `page_setup` (`orientation`, `fit_to_width`, `fit_to_height`, `margins.left/right/top/bottom/header/footer`).
-- Generation behavior: `generation_rules` (`freeze_header_row`, `status_dropdown_options`, `blank_rows_when_no_data`) and `workbook` (`sheet_name`, `start_row`, `start_column`).
+2. Test Case customization (XLSX output):
+- Edit only `input/customize/test-case.yaml`.
+- `defaults`: workbook setup (`sheet_name`, `start_row`, `start_column`), column headers/letters/widths, default row values.
+- `style`: header/body font, color, fill, alignment, wrap, border.
+- `layout`: row heights and page setup/margins.
+- `behavior`: generation rules (`freeze_header_row`, `status_dropdown_options`, `blank_rows_when_no_data`).
 
 3. Test Execution Guide:
 - Update `input/format/teg-format.yaml` for TEG structure/style mapping.

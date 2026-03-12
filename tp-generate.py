@@ -1,4 +1,5 @@
 import re
+from copy import deepcopy
 from pathlib import Path
 from datetime import datetime
 
@@ -11,8 +12,173 @@ from docx.oxml.ns import qn
 BASE = Path(__file__).parent
 TEMPLATE = BASE / "templates" / "Test-Plan-Template.docx"
 INPUT = BASE / "input" / "tp" / "tp.yaml"
+TP_CUSTOMIZE_FILE = BASE / "input" / "customize" / "test-plan.yaml"
+LEGACY_TP_FORMAT_FILE = BASE / "input" / "format" / "tp-format.yaml"
 OUTPUT_DIR = BASE / "output"
 TP_OUTPUT_DIR = OUTPUT_DIR / "test-plans"
+
+DEFAULT_TP_CUSTOMIZATION = {
+    "defaults": {
+        "tp_title": "<Component / Feature Name>",
+        "intro": "<1-2 short sentences on what is being tested and why. Keep it direct.>",
+        "scope": {
+            "in_scope": "<1-2 short sentences. State exactly what QA will validate.>",
+            "out_scope": "<1 sentence. State what is not covered.>",
+        },
+        "objectives": ["Verify that <requirement 1>."],
+        "approach_block": (
+            "Methodology: Manual Testing (UI/Visual/Interaction). Add Automation Testing only if needed.\n"
+            "Type of Testing: Functional Testing, UI Testing, Responsive Testing.\n"
+            "Tools Used: OpenProject, Chrome DevTools. Add Playwright only if automation support is needed."
+        ),
+        "schedule": [
+            {"phase": "Test Planning", "start": "<MM/DD or TBD>", "end": "<MM/DD or TBD>"},
+            {"phase": "Test Case Design", "start": "<MM/DD or TBD>", "end": "<MM/DD or TBD>"},
+            {"phase": "Test Execution", "start": "<MM/DD or TBD>", "end": "<MM/DD or TBD>"},
+            {"phase": "Bug Fix Verification", "start": "<MM/DD or TBD>", "end": "<MM/DD or TBD>"},
+            {"phase": "Test Completion", "start": "<MM/DD or TBD>", "end": "<MM/DD or TBD>"},
+        ],
+        "environment_block": (
+            "Hardware/Software: Desktop / Windows 10 / Google Chrome\n"
+            "Staging URL or App Version: <TBD or staging link / version>\n"
+            "Test Data Sources: <Only include this line if test data source details are needed>"
+        ),
+        "resources": [
+            {
+                "role": "QA Lead",
+                "name": "Sir Nico",
+                "responsibilities": "<Review TP/TC, coordinate testing coverage, and perform final validation.>",
+            },
+            {
+                "role": "QA Test Engineer",
+                "name": "Jerome",
+                "responsibilities": "<Design TCs, execute tests, capture evidence, and report defects.>",
+            },
+            {"role": "Developer", "name": "TBD", "responsibilities": "<Fix defects and support verification.>"},
+        ],
+        "risks": [{"risk": "<Risk 1>", "mitigation": "<Mitigation 1>"}],
+        "deliverables": ["Test Plan Document", "Test Cases Document"],
+        "entry": "<1-2 compact sentences describing when testing can start. Not a list.>",
+        "exit": "<1-2 compact sentences describing when testing can end. Not a list.>",
+    },
+    "style": {
+        "font": {
+            "family": "Calibri",
+            "sizes": {"title": 14, "heading": 12, "body": 11, "table_body": 11},
+        },
+        "paragraph_styles": {
+            "title": {
+                "alignment": "left",
+                "line_spacing": 1.15,
+                "space_before_pt": 0,
+                "space_after_pt": 14,
+            },
+            "heading": {
+                "alignment": "left",
+                "line_spacing": 1.15,
+                "space_before_pt": 18,
+                "space_after_pt": 6,
+            },
+            "heading_table_section": {
+                "alignment": "left",
+                "line_spacing": 1.15,
+                "space_before_pt": 18,
+                "space_after_pt": 0,
+            },
+            "body": {
+                "alignment": "justify",
+                "line_spacing": 1.15,
+                "space_before_pt": 0,
+                "space_after_pt": 6,
+            },
+            "bullet": {
+                "alignment": "left",
+                "line_spacing": 1.15,
+                "space_before_pt": 0,
+                "space_after_pt": 3,
+            },
+            "table_cell": {
+                "alignment": "left",
+                "line_spacing": 1.0,
+                "space_before_pt": 0,
+                "space_after_pt": 0,
+            },
+            "multiline_block": {
+                "alignment": "left",
+                "line_spacing": 1.15,
+                "space_before_pt": 0,
+                "space_after_pt": 3,
+            },
+            "placeholder_clear": {
+                "alignment": "left",
+                "line_spacing": 1.0,
+                "space_before_pt": 0,
+                "space_after_pt": 0,
+            },
+            "empty": {
+                "alignment": "left",
+                "line_spacing": 1.0,
+                "space_before_pt": 0,
+                "space_after_pt": 0,
+            },
+        },
+        "labels_to_bold": [
+            "Purpose/Executive Summary:",
+            "In Scope:",
+            "Out of Scope:",
+            "Methodologies:",
+            "Type of Testing:",
+            "Tools Used:",
+            "Hardware/Software:",
+            "Staging URL or App Version:",
+            "Test Data Sources:",
+            "Entry Criteria:",
+            "Exit Criteria:",
+        ],
+    },
+    "layout": {
+        "table": {"style": "Table Grid", "width_inches": 6.5},
+        "table_section_titles": [
+            "5. Test Schedule",
+            "7. Resources & Responsibilities",
+            "8. Risks & Mitigations",
+        ],
+    },
+    "behavior": {
+        "intro_prefix_label": "Purpose/Executive Summary:",
+        "ordered_blocks": {
+            "environment": {
+                "target_labels": [
+                    "Hardware/Software:",
+                    "Staging URL or App Version:",
+                    "Test Data Sources:",
+                ],
+                "aliases": {
+                    "hardwaresoftware": ["hardwareos", "hardwaresoftware"],
+                    "stagingurlorappversion": ["environmenturlappversion", "stagingurl", "appversion"],
+                    "testdatasources": ["testdata", "testdatasource", "testdatasources"],
+                },
+            },
+            "approach": {
+                "target_labels": ["Methodologies:", "Type of Testing:", "Tools Used:"],
+                "aliases": {
+                    "methodologies": ["methodology", "methodologies"],
+                    "typeoftesting": ["typesoftesting", "typeoftesting"],
+                    "toolsused": ["toolsused"],
+                },
+            },
+        },
+    },
+}
+
+ALIGNMENT_MAP = {
+    "left": WD_ALIGN_PARAGRAPH.LEFT,
+    "right": WD_ALIGN_PARAGRAPH.RIGHT,
+    "center": WD_ALIGN_PARAGRAPH.CENTER,
+    "justify": WD_ALIGN_PARAGRAPH.JUSTIFY,
+}
+
+RUNTIME_TP_CUSTOMIZATION = deepcopy(DEFAULT_TP_CUSTOMIZATION)
 
 
 def safe_filename(name: str) -> str:
@@ -32,6 +198,91 @@ def normalize_text(text: str) -> str:
     text = text.replace("\n", " ")
     text = re.sub(r"[ \t]+", " ", text)
     return text.strip()
+
+
+def load_yaml_file(file_path: Path) -> dict:
+    if not file_path.exists():
+        return {}
+    with open(file_path, "r", encoding="utf-8") as file:
+        return yaml.safe_load(file) or {}
+
+
+def deep_merge(base, override):
+    if isinstance(base, dict) and isinstance(override, dict):
+        merged = dict(base)
+        for key, value in override.items():
+            if key in merged:
+                merged[key] = deep_merge(merged[key], value)
+            else:
+                merged[key] = value
+        return merged
+    return override
+
+
+def merge_content_defaults(defaults, override):
+    if isinstance(defaults, dict):
+        override_dict = override if isinstance(override, dict) else {}
+        merged = {}
+
+        for key in defaults:
+            merged[key] = merge_content_defaults(defaults[key], override_dict.get(key))
+
+        for key, value in override_dict.items():
+            if key not in merged:
+                merged[key] = value
+
+        return merged
+
+    if isinstance(defaults, list):
+        if isinstance(override, list) and len(override) > 0:
+            return override
+        return defaults
+
+    if override is None:
+        return defaults
+
+    if isinstance(override, str) and not override.strip():
+        return defaults
+
+    return override
+
+
+def normalize_tp_customization_schema(raw_cfg: dict) -> dict:
+    if not raw_cfg:
+        return {}
+
+    if "defaults" in raw_cfg or "style" in raw_cfg or "layout" in raw_cfg or "behavior" in raw_cfg:
+        return raw_cfg
+
+    # Backward compatibility: legacy tp-format.yaml was content-only top-level fields.
+    return {"defaults": raw_cfg}
+
+
+def load_tp_customization() -> dict:
+    if TP_CUSTOMIZE_FILE.exists():
+        raw_cfg = load_yaml_file(TP_CUSTOMIZE_FILE)
+    elif LEGACY_TP_FORMAT_FILE.exists():
+        raw_cfg = load_yaml_file(LEGACY_TP_FORMAT_FILE)
+    else:
+        raw_cfg = {}
+
+    normalized_cfg = normalize_tp_customization_schema(raw_cfg)
+    return deep_merge(DEFAULT_TP_CUSTOMIZATION, normalized_cfg)
+
+
+def runtime_get(*path, default=None):
+    current = RUNTIME_TP_CUSTOMIZATION
+    for key in path:
+        if not isinstance(current, dict) or key not in current:
+            return default
+        current = current[key]
+    return current
+
+
+def resolve_alignment(value: str | None, fallback=WD_ALIGN_PARAGRAPH.LEFT):
+    if not value:
+        return fallback
+    return ALIGNMENT_MAP.get(str(value).strip().lower(), fallback)
 
 
 def ensure_prefixed_label(text: str, label: str) -> str:
@@ -117,6 +368,18 @@ def set_para_format(
     pf.space_before = Pt(space_before_pt)
     pf.space_after = Pt(space_after_pt)
     paragraph.alignment = align
+
+
+def set_para_format_from_style(paragraph, style_name: str):
+    style_cfg = runtime_get("style", "paragraph_styles", style_name, default={}) or {}
+
+    set_para_format(
+        paragraph,
+        align=resolve_alignment(style_cfg.get("alignment"), WD_ALIGN_PARAGRAPH.LEFT),
+        line_spacing=style_cfg.get("line_spacing", 1.15),
+        space_before_pt=style_cfg.get("space_before_pt", 0),
+        space_after_pt=style_cfg.get("space_after_pt", 0),
+    )
 
 
 def is_heading_or_title(paragraph) -> bool:
@@ -222,19 +485,7 @@ def bold_leading_label(paragraph, label_text: str):
 
 
 def apply_label_bolding(doc: Document):
-    labels = [
-        "Purpose/Executive Summary:",
-        "In Scope:",
-        "Out of Scope:",
-        "Methodologies:",
-        "Type of Testing:",
-        "Tools Used:",
-        "Hardware/Software:",
-        "Staging URL or App Version:",
-        "Test Data Sources:",
-        "Entry Criteria:",
-        "Exit Criteria:",
-    ]
+    labels = runtime_get("style", "labels_to_bold", default=[]) or []
 
     for p in doc.paragraphs:
         for label in labels:
@@ -252,22 +503,10 @@ def insert_bullets_at_placeholder(paragraph, items: list[str]):
     for item in items:
         p = paragraph.insert_paragraph_before(normalize_text(item))
         p.style = "List Bullet"
-        set_para_format(
-            p,
-            align=WD_ALIGN_PARAGRAPH.LEFT,
-            line_spacing=1.15,
-            space_before_pt=0,
-            space_after_pt=3,
-        )
+        set_para_format_from_style(p, "bullet")
 
     paragraph.text = ""
-    set_para_format(
-        paragraph,
-        align=WD_ALIGN_PARAGRAPH.LEFT,
-        line_spacing=1.0,
-        space_before_pt=0,
-        space_after_pt=0,
-    )
+    set_para_format_from_style(paragraph, "placeholder_clear")
 
 
 def bold_table_header_row(table):
@@ -276,36 +515,29 @@ def bold_table_header_row(table):
         for p in cell.paragraphs:
             for run in p.runs:
                 run.bold = True
-            set_para_format(
-                p,
-                align=WD_ALIGN_PARAGRAPH.LEFT,
-                line_spacing=1.0,
-                space_before_pt=0,
-                space_after_pt=0,
-            )
+            set_para_format_from_style(p, "table_cell")
 
 
 def insert_table_after(paragraph, headers: list[str], rows: list[tuple]):
     paragraph.text = ""
-    set_para_format(
-        paragraph,
-        align=WD_ALIGN_PARAGRAPH.LEFT,
-        line_spacing=1.0,
-        space_before_pt=0,
-        space_after_pt=0,
-    )
+    set_para_format_from_style(paragraph, "placeholder_clear")
 
+    table_cfg = runtime_get("layout", "table", default={}) or {}
     parent = paragraph._parent
-    table = parent.add_table(rows=1, cols=len(headers), width=Inches(6.5))
-    table.style = "Table Grid"
+    table = parent.add_table(
+        rows=1,
+        cols=len(headers),
+        width=Inches(table_cfg.get("width_inches", 6.5)),
+    )
+    table.style = table_cfg.get("style", "Table Grid")
 
     hdr_cells = table.rows[0].cells
-    for i, h in enumerate(headers):
-        hdr_cells[i].text = str(h)
+    for i, header_value in enumerate(headers):
+        hdr_cells[i].text = str(header_value)
 
-    for r in rows:
+    for row_value in rows:
         row_cells = table.add_row().cells
-        for i, val in enumerate(r):
+        for i, val in enumerate(row_value):
             row_cells[i].text = "" if val is None else str(val)
 
     paragraph._element.addnext(table._element)
@@ -314,13 +546,7 @@ def insert_table_after(paragraph, headers: list[str], rows: list[tuple]):
     for row in table.rows:
         for cell in row.cells:
             for p in cell.paragraphs:
-                set_para_format(
-                    p,
-                    align=WD_ALIGN_PARAGRAPH.LEFT,
-                    line_spacing=1.0,
-                    space_before_pt=0,
-                    space_after_pt=0,
-                )
+                set_para_format_from_style(p, "table_cell")
 
     return table
 
@@ -331,7 +557,7 @@ def insert_multiline_block_at_placeholder(
     block_text: str,
     *,
     justified=False,
-    space_after_pt=3,
+    style_name="multiline_block",
 ):
     """
     Replaces one placeholder paragraph with multiple paragraphs,
@@ -345,107 +571,51 @@ def insert_multiline_block_at_placeholder(
 
     for line in lines:
         new_p = p.insert_paragraph_before(line)
-        set_para_format(
-            new_p,
-            align=WD_ALIGN_PARAGRAPH.JUSTIFY if justified else WD_ALIGN_PARAGRAPH.LEFT,
-            line_spacing=1.15,
-            space_before_pt=0,
-            space_after_pt=space_after_pt,
-        )
+        set_para_format_from_style(new_p, style_name)
+        if justified:
+            new_p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     p.text = ""
-    set_para_format(
-        p,
-        align=WD_ALIGN_PARAGRAPH.LEFT,
-        line_spacing=1.0,
-        space_before_pt=0,
-        space_after_pt=0,
-    )
+    set_para_format_from_style(p, "placeholder_clear")
 
 
 def format_document_spacing(doc: Document):
     """
     Desired layout:
-    - Title
-      visible space after
-    - Section heading
-      visible space before
-    - If next content is normal paragraph -> small space after heading
-    - If next content is a table -> no space after heading
+    - Title with visible space after
+    - Section heading with visible space before
+    - Smaller/zero heading space-after for table sections
     """
-    paragraphs = doc.paragraphs
+    table_section_titles = set(runtime_get("layout", "table_section_titles", default=[]) or [])
 
-    table_section_titles = {
-        "5. Test Schedule",
-        "7. Resources & Responsibilities",
-        "8. Risks & Mitigations",
-    }
-
-    for p in paragraphs:
+    for p in doc.paragraphs:
         text = p.text.strip()
         style_name = p.style.name.lower() if p.style and p.style.name else ""
 
         if not text:
-            set_para_format(
-                p,
-                align=WD_ALIGN_PARAGRAPH.LEFT,
-                line_spacing=1.0,
-                space_before_pt=0,
-                space_after_pt=0,
-            )
+            set_para_format_from_style(p, "empty")
             continue
 
         if "title" in style_name or text.lower().startswith("test plan:"):
-            set_para_format(
-                p,
-                align=WD_ALIGN_PARAGRAPH.LEFT,
-                line_spacing=1.15,
-                space_before_pt=0,
-                space_after_pt=14,
-            )
+            set_para_format_from_style(p, "title")
             continue
 
         if is_heading_or_title(p):
-            heading_space_after = 0 if text in table_section_titles else 6
-
-            set_para_format(
-                p,
-                align=WD_ALIGN_PARAGRAPH.LEFT,
-                line_spacing=1.15,
-                space_before_pt=18,
-                space_after_pt=heading_space_after,
-            )
+            heading_style = "heading_table_section" if text in table_section_titles else "heading"
+            set_para_format_from_style(p, heading_style)
             continue
 
         if is_bullet_paragraph(p):
-            set_para_format(
-                p,
-                align=WD_ALIGN_PARAGRAPH.LEFT,
-                line_spacing=1.15,
-                space_before_pt=0,
-                space_after_pt=3,
-            )
+            set_para_format_from_style(p, "bullet")
             continue
 
-        set_para_format(
-            p,
-            align=WD_ALIGN_PARAGRAPH.JUSTIFY,
-            line_spacing=1.15,
-            space_before_pt=0,
-            space_after_pt=6,
-        )
+        set_para_format_from_style(p, "body")
 
     for table in doc.tables:
         for row in table.rows:
             for cell in row.cells:
                 for p in cell.paragraphs:
-                    set_para_format(
-                        p,
-                        align=WD_ALIGN_PARAGRAPH.LEFT,
-                        line_spacing=1.0,
-                        space_before_pt=0,
-                        space_after_pt=0,
-                    )
+                    set_para_format_from_style(p, "table_cell")
 
 
 def set_run_font(run, font_name="Calibri", font_size_pt: int | None = None):
@@ -476,39 +646,54 @@ def force_document_font(doc: Document, font_name="Calibri"):
 
 
 def apply_typography(doc: Document):
-    # H1: 14, H2: 12, Body: 11
+    font_family = runtime_get("style", "font", "family", default="Calibri")
+    sizes = runtime_get("style", "font", "sizes", default={}) or {}
+
+    title_size = sizes.get("title", 14)
+    heading_size = sizes.get("heading", 12)
+    body_size = sizes.get("body", 11)
+    table_body_size = sizes.get("table_body", body_size)
+
     for p in doc.paragraphs:
         text = p.text.strip()
         style_name = p.style.name.lower() if p.style and p.style.name else ""
 
         if "title" in style_name or text.lower().startswith("test plan:"):
-            size = 14
+            size = title_size
         elif is_heading_or_title(p):
-            size = 12
+            size = heading_size
         else:
-            size = 11
+            size = body_size
 
         for run in p.runs:
-            set_run_font(run, "Calibri", size)
+            set_run_font(run, font_family, size)
 
     for table in doc.tables:
         for row in table.rows:
             for cell in row.cells:
                 for p in cell.paragraphs:
                     for run in p.runs:
-                        set_run_font(run, "Calibri", 11)
+                        set_run_font(run, font_family, table_body_size)
 
 
 def main():
-    data = yaml.safe_load(INPUT.read_text(encoding="utf-8"))
+    global RUNTIME_TP_CUSTOMIZATION
+
+    RUNTIME_TP_CUSTOMIZATION = load_tp_customization()
+
+    if not INPUT.exists():
+        raise FileNotFoundError(f"Missing input file: {INPUT}")
+
+    input_data = load_yaml_file(INPUT)
+    content_defaults = runtime_get("defaults", default={}) or {}
+    data = merge_content_defaults(content_defaults, input_data)
+
     doc = Document(str(TEMPLATE))
 
     clean_existing_paragraphs(doc)
 
-    intro_with_label = ensure_prefixed_label(
-        data.get("intro", ""),
-        "Purpose/Executive Summary:",
-    )
+    intro_label = runtime_get("behavior", "intro_prefix_label", default="Purpose/Executive Summary:")
+    intro_with_label = ensure_prefixed_label(data.get("intro", ""), intro_label)
 
     mapping = {
         "{{TP_TITLE}}": normalize_text(data.get("tp_title", "")),
@@ -521,18 +706,18 @@ def main():
 
     replace_in_doc(doc, mapping)
 
+    environment_cfg = runtime_get("behavior", "ordered_blocks", "environment", default={}) or {}
     normalized_environment_block = ordered_labeled_block(
         data.get("environment_block", ""),
-        target_labels=[
-            "Hardware/Software:",
-            "Staging URL or App Version:",
-            "Test Data Sources:",
-        ],
-        aliases={
-            "hardwaresoftware": ["hardwareos", "hardwaresoftware"],
-            "stagingurlorappversion": ["environmenturlappversion", "stagingurl", "appversion"],
-            "testdatasources": ["testdata", "testdatasource", "testdatasources"],
-        },
+        target_labels=environment_cfg.get(
+            "target_labels",
+            [
+                "Hardware/Software:",
+                "Staging URL or App Version:",
+                "Test Data Sources:",
+            ],
+        ),
+        aliases=environment_cfg.get("aliases", {}),
     )
 
     insert_multiline_block_at_placeholder(
@@ -540,21 +725,17 @@ def main():
         "{{ENVIRONMENT_BLOCK}}",
         normalized_environment_block,
         justified=False,
-        space_after_pt=3,
+        style_name="multiline_block",
     )
 
+    approach_cfg = runtime_get("behavior", "ordered_blocks", "approach", default={}) or {}
     normalized_approach_block = ordered_labeled_block(
         data.get("approach_block", ""),
-        target_labels=[
-            "Methodologies:",
-            "Type of Testing:",
-            "Tools Used:",
-        ],
-        aliases={
-            "methodologies": ["methodology", "methodologies"],
-            "typeoftesting": ["typesoftesting", "typeoftesting"],
-            "toolsused": ["toolsused"],
-        },
+        target_labels=approach_cfg.get(
+            "target_labels",
+            ["Methodologies:", "Type of Testing:", "Tools Used:"],
+        ),
+        aliases=approach_cfg.get("aliases", {}),
     )
 
     insert_multiline_block_at_placeholder(
@@ -562,7 +743,7 @@ def main():
         "{{APPROACH_BLOCK}}",
         normalized_approach_block,
         justified=False,
-        space_after_pt=3,
+        style_name="multiline_block",
     )
 
     p_obj = find_paragraph(doc, "{{OBJECTIVES}}")
@@ -610,7 +791,9 @@ def main():
 
     apply_label_bolding(doc)
     format_document_spacing(doc)
-    force_document_font(doc, "Calibri")
+
+    font_family = runtime_get("style", "font", "family", default="Calibri")
+    force_document_font(doc, font_family)
     apply_typography(doc)
 
     TP_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -623,7 +806,7 @@ def main():
         out_path = TP_OUTPUT_DIR / f"Test Plan_{title}_{ts}.docx"
         doc.save(str(out_path))
 
-    print(f"✅ Generated: {out_path}")
+    print(f"Generated: {out_path}")
 
 
 if __name__ == "__main__":

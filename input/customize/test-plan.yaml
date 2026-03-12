@@ -1,0 +1,193 @@
+# Single editable customization file for Test Plan generation.
+# Users should only edit this file for default content and visual behavior.
+
+defaults:
+  tp_title: "<Component / Feature Name>"
+
+  intro: |
+    <1-2 short sentences on what is being tested and why. Keep it direct.>
+
+  scope:
+    in_scope: |
+      <1-2 short sentences. State exactly what QA will validate.>
+    out_scope: |
+      <1 sentence. State what is not covered.>
+
+  objectives:
+    - "Verify that <requirement 1>."
+
+  approach_block: |
+    Methodology: Manual Testing (UI/Visual/Interaction). Add Automation Testing only if needed.
+    Type of Testing: Functional Testing, UI Testing, Responsive Testing.
+    Tools Used: OpenProject, Chrome DevTools. Add Playwright only if automation support is needed.
+
+  schedule:
+    - phase: "Test Planning"
+      start: "<MM/DD or TBD>"
+      end: "<MM/DD or TBD>"
+    - phase: "Test Case Design"
+      start: "<MM/DD or TBD>"
+      end: "<MM/DD or TBD>"
+    - phase: "Test Execution"
+      start: "<MM/DD or TBD>"
+      end: "<MM/DD or TBD>"
+    - phase: "Bug Fix Verification"
+      start: "<MM/DD or TBD>"
+      end: "<MM/DD or TBD>"
+    - phase: "Test Completion"
+      start: "<MM/DD or TBD>"
+      end: "<MM/DD or TBD>"
+
+  environment_block: |
+    Hardware/Software: Desktop / Windows 10 / Google Chrome
+    Staging URL or App Version: <TBD or staging link / version>
+    Test Data Sources: <Only include this line if test data source details are needed>
+
+  resources:
+    - role: "QA Lead"
+      name: "Sir Nico"
+      responsibilities: "<Review TP/TC, coordinate testing coverage, and perform final validation.>"
+    - role: "QA Test Engineer"
+      name: "Jerome"
+      responsibilities: "<Design TCs, execute tests, capture evidence, and report defects.>"
+    - role: "Developer"
+      name: "TBD"
+      responsibilities: "<Fix defects and support verification.>"
+
+  risks:
+    - risk: "<Risk 1>"
+      mitigation: "<Mitigation 1>"
+
+  deliverables:
+    - "Test Plan Document"
+    - "Test Cases Document"
+
+  entry: |
+    <1-2 compact sentences describing when testing can start. Not a list.>
+
+  exit: |
+    <1-2 compact sentences describing when testing can end. Not a list.>
+
+style:
+  font:
+    family: Calibri
+    sizes:
+      title: 14
+      heading: 12
+      body: 11
+      table_body: 11
+
+  paragraph_styles:
+    title:
+      alignment: left
+      line_spacing: 1.15
+      space_before_pt: 0
+      space_after_pt: 14
+
+    heading:
+      alignment: left
+      line_spacing: 1.15
+      space_before_pt: 18
+      space_after_pt: 6
+
+    heading_table_section:
+      alignment: left
+      line_spacing: 1.15
+      space_before_pt: 18
+      space_after_pt: 0
+
+    body:
+      alignment: justify
+      line_spacing: 1.15
+      space_before_pt: 0
+      space_after_pt: 6
+
+    bullet:
+      alignment: left
+      line_spacing: 1.15
+      space_before_pt: 0
+      space_after_pt: 3
+
+    table_cell:
+      alignment: left
+      line_spacing: 1.0
+      space_before_pt: 0
+      space_after_pt: 0
+
+    multiline_block:
+      alignment: left
+      line_spacing: 1.15
+      space_before_pt: 0
+      space_after_pt: 3
+
+    placeholder_clear:
+      alignment: left
+      line_spacing: 1.0
+      space_before_pt: 0
+      space_after_pt: 0
+
+    empty:
+      alignment: left
+      line_spacing: 1.0
+      space_before_pt: 0
+      space_after_pt: 0
+
+  labels_to_bold:
+    - "Purpose/Executive Summary:"
+    - "In Scope:"
+    - "Out of Scope:"
+    - "Methodologies:"
+    - "Type of Testing:"
+    - "Tools Used:"
+    - "Hardware/Software:"
+    - "Staging URL or App Version:"
+    - "Test Data Sources:"
+    - "Entry Criteria:"
+    - "Exit Criteria:"
+
+layout:
+  table:
+    style: "Table Grid"
+    width_inches: 6.5
+
+  table_section_titles:
+    - "5. Test Schedule"
+    - "7. Resources & Responsibilities"
+    - "8. Risks & Mitigations"
+
+behavior:
+  intro_prefix_label: "Purpose/Executive Summary:"
+
+  ordered_blocks:
+    environment:
+      target_labels:
+        - "Hardware/Software:"
+        - "Staging URL or App Version:"
+        - "Test Data Sources:"
+      aliases:
+        hardwaresoftware:
+          - hardwareos
+          - hardwaresoftware
+        stagingurlorappversion:
+          - environmenturlappversion
+          - stagingurl
+          - appversion
+        testdatasources:
+          - testdata
+          - testdatasource
+          - testdatasources
+
+    approach:
+      target_labels:
+        - "Methodologies:"
+        - "Type of Testing:"
+        - "Tools Used:"
+      aliases:
+        methodologies:
+          - methodology
+          - methodologies
+        typeoftesting:
+          - typesoftesting
+          - typeoftesting
+        toolsused:
+          - toolsused

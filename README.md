@@ -39,7 +39,8 @@ python teg-generate.py "output/test-cases/Test Case_<Feature Name>.xlsx"
 ## Inputs and Prompts
 
 - Prompt templates: `prompts/`
-- Formatting config: `input/format/`
+- TP/TC customization (edit these): `input/customize/test-plan.yaml`, `input/customize/test-case.yaml`
+- Legacy formatting config (backward compatibility): `input/format/`
 - Reference context: `context/`
 
 Use the prompt files to produce YAML content, then place YAML into the expected `input/` locations before running generators.
