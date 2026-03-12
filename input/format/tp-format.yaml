@@ -58,7 +58,6 @@ risks:
 deliverables:
   - "Test Plan Document"
   - "Test Cases Document"
-  - "Defect Report (if applicable)"
 
 entry: |
   <1-2 short sentences describing when testing can start.>
