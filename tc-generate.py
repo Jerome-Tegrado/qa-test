@@ -61,14 +61,14 @@ def to_numbered_list(items: list[str]) -> str:
 def to_bullet_list(items: list[str]) -> str:
     if not items:
         return ""
-    return "\n".join(f"• {item}" for item in items)
+    return "\n".join(f"\u2022 {item}" for item in items)
 
 
 def to_single_bullet(text: str) -> str:
     text = (text or "").strip()
     if not text:
         return ""
-    return f"• {text}"
+    return f"\u2022 {text}"
 
 
 def normalize_items(value) -> list[str]:
@@ -82,7 +82,7 @@ def normalize_items(value) -> list[str]:
             line = raw.strip()
             if not line:
                 continue
-            line = re.sub(r"^(?:[-*•â€¢]+\s*|\d+[\.)]\s*)", "", line).strip()
+            line = re.sub(r"^(?:(?:[-*]|\u2022)+\s*|\d+[\.)]\s*)", "", line).strip()
             if line:
                 lines.append(line)
         return lines
@@ -315,7 +315,7 @@ def main() -> None:
 
     output_path = TC_OUTPUT_DIR / Path(output_file_name).name
     wb.save(output_path)
-    print(f"✅ Generated: {output_path}")
+    print(f"Generated: {output_path}")
 
 
 if __name__ == "__main__":
