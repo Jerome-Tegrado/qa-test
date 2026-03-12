@@ -39,7 +39,7 @@ You can either make manual code changes or use AI coding agents to help. This is
 
 2. Test Case formatting (XLSX):
 - Update `input/format/tc-format.yaml`
-- Typical changes in `input/format/tc-format.yaml`: `font_name`, `font_size`, column width, row height, colors, and alignment.
+- Typical changes in `input/format/tc-format.yaml` (applied by `tc-generate.py`): `font_name`, `font_size`, column width, row height, colors, and alignment.
 - If needed, add personalized instructions to the YAML content by updating `input/format/tc-format.yaml`.
 
 3. Test Execution Guide:
