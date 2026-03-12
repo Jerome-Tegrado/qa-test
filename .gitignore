@@ -11,8 +11,15 @@ env/
 .DS_Store
 Thumbs.db
 
-# Generated outputs
-output/
+# Generated outputs (track folder structure only)
+output/**
+!output/
+!output/test-cases/
+!output/test-cases/.gitkeep
+!output/test-execution-guides/
+!output/test-execution-guides/.gitkeep
+!output/test-plans/
+!output/test-plans/.gitkeep
 
 # Runtime input data (keep format templates tracked)
 input/tp/*.yaml
