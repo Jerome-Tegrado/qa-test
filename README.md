@@ -58,4 +58,4 @@ These outputs are local artifacts and should not be pushed to GitHub.
 ## User Guide
 
 For full end-to-end instructions, see:
-- `NEW-USER-GUIDE.md`
+- `GUIDE.md`
