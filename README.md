@@ -39,7 +39,8 @@ python teg-generate.py "output/test-cases/Test Case_<Feature Name>.xlsx"
 ## Inputs and Prompts
 
 - Prompt templates: `prompts/`
-- TP/TC customization (edit these): `input/customize/tp-customize.yaml`, `input/customize/tc-customize.yaml`
+- Remote generic customization templates (kept permanent in repo): `input/customize/tp-customize.yaml`, `input/customize/tc-customize.yaml`
+- Personal local customization overrides (ignored by git): `input/customize-local/tp-customize.yaml`, `input/customize-local/tc-customize.yaml`
 - Legacy formatting config (backward compatibility): `input/format/`
 - Reference context: `context/`
 

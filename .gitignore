@@ -27,5 +27,5 @@ input/tc/*.yaml
 input/teg/*.yaml
 
 # Personal TP/TC customization (local only)
-input/customize/tp-customize.yaml
-input/customize/tc-customize.yaml
+input/customize-local/*.yaml
+!input/customize-local/.gitkeep
