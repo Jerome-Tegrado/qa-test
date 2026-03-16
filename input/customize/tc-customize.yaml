@@ -1,5 +1,5 @@
 # Single editable customization file for Test Case generation.
-# Users should only edit this file for Excel structure/design/behavior.
+# This file is a general example template for Excel structure/design/behavior.
 
 defaults:
   workbook:

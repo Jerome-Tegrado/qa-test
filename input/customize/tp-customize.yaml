@@ -1,5 +1,5 @@
 # Single editable customization file for Test Plan generation.
-# Users should only edit this file for default content and visual behavior.
+# This file is a general example template for default content and visual behavior.
 
 defaults:
   tp_title: "<Component / Feature Name>"
@@ -45,13 +45,13 @@ defaults:
 
   resources:
     - role: "QA Lead"
-      name: "Sir Nico"
+      name: "<QA Lead Name>"
       responsibilities: "<Review TP/TC, coordinate testing coverage, and perform final validation.>"
     - role: "QA Test Engineer"
-      name: "Jerome"
+      name: "<QA Engineer Name>"
       responsibilities: "<Design TCs, execute tests, capture evidence, and report defects.>"
     - role: "Developer"
-      name: "TBD"
+      name: "<Developer Name or Team>"
       responsibilities: "<Fix defects and support verification.>"
 
   risks:
