@@ -22,6 +22,7 @@ Do not create a brand-new template unless the source files do not provide enough
 
 ## REQUIRED OUTPUT SCHEMA
 Use the uploaded/source file `tp-format.yaml` as the required final output schema.
+Use `tp-customize.yaml` as well in the source files of the AI workspace for personalization preferences.
 
 You must:
 - follow `tp-format.yaml` exactly

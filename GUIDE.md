@@ -31,13 +31,8 @@ pip install pyyaml python-docx openpyxl
 
 ## 3. Customize Format Per User (Before Generation)
 
-Each user can tailor TP/TC outputs to match their own preferred style and structure (font, spacing, size, layout, wording, and defaults).
+TP/TC outputs can be tailored to match project or user preferences (font, spacing, size, layout, wording, and defaults).
 For TP and TC customization, edit only these two files:
-- `input/customize/tp-customize.yaml`
-- `input/customize/tc-customize.yaml`
-
-You do not need to edit templates or Python scripts for normal TP/TC personalization.
-After you finish personalizing these files, attach both to the AI project source files:
 - `input/customize/tp-customize.yaml`
 - `input/customize/tc-customize.yaml`
 
@@ -58,6 +53,11 @@ After you finish personalizing these files, attach both to the AI project source
 3. Test Execution Guide:
 - Update `input/format/teg-format.yaml` for TEG structure/style mapping.
 - If needed, adjust formatting logic in `teg-generate.py`.
+
+IMPORTANT: You do not need to edit templates or Python scripts for normal TP/TC personalization.
+After you finish personalizing these files, attach both to the AI project source files:
+- `input/customize/tp-customize.yaml`
+- `input/customize/tc-customize.yaml`
 
 ## 4. System Workflow (Run in Order)
 

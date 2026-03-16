@@ -22,6 +22,7 @@ Do not create a brand-new template unless the source files do not provide enough
 
 ## REQUIRED OUTPUT SCHEMA
 Use the uploaded/source file `tc-format.yaml` as the required final output schema.
+Use `tc-customize.yaml` as well in the source files of the AI workspace for personalization of test cases.
 
 You must:
 - follow `tc-format.yaml` exactly
