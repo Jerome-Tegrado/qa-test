@@ -13,7 +13,6 @@ BASE = Path(__file__).parent
 TEMPLATE = BASE / "templates" / "Test-Plan-Template.docx"
 INPUT = BASE / "input" / "tp" / "tp.yaml"
 TP_CUSTOMIZE_FILE = BASE / "input" / "customize" / "tp-customize.yaml"
-LOCAL_TP_CUSTOMIZE_FILE = BASE / "input" / "customize-local" / "tp-customize.yaml"
 LEGACY_TP_CUSTOMIZE_FILE = BASE / "input" / "customize" / "test-plan.yaml"
 LEGACY_TP_FORMAT_FILE = BASE / "input" / "format" / "tp-format.yaml"
 OUTPUT_DIR = BASE / "output"
@@ -261,9 +260,7 @@ def normalize_tp_customization_schema(raw_cfg: dict) -> dict:
 
 
 def load_tp_customization() -> dict:
-    if LOCAL_TP_CUSTOMIZE_FILE.exists():
-        raw_cfg = load_yaml_file(LOCAL_TP_CUSTOMIZE_FILE)
-    elif TP_CUSTOMIZE_FILE.exists():
+    if TP_CUSTOMIZE_FILE.exists():
         raw_cfg = load_yaml_file(TP_CUSTOMIZE_FILE)
     elif LEGACY_TP_CUSTOMIZE_FILE.exists():
         raw_cfg = load_yaml_file(LEGACY_TP_CUSTOMIZE_FILE)
